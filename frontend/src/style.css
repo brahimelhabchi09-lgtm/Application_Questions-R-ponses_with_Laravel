@@ -8,7 +8,12 @@
   }
 
   body {
-    @apply bg-[#020617] text-slate-200 antialiased;
+    @apply text-slate-200 antialiased;
+    /* Soft gradient background for the whole app */
+    background:
+      radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 55%),
+      radial-gradient(circle at bottom right, rgba(129, 140, 248, 0.18), transparent 55%),
+      #020617;
   }
 
   ::-webkit-scrollbar {
@@ -26,20 +31,28 @@
 
 @layer components {
   .glass {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: radial-gradient(circle at top left, rgba(129, 140, 248, 0.16), transparent 55%),
+      rgba(15, 23, 42, 0.92);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    box-shadow:
+      0 18px 45px rgba(15, 23, 42, 0.8),
+      0 0 0 1px rgba(15, 23, 42, 0.9);
     @apply rounded-2xl;
   }
 
   .neon-btn {
-    @apply bg-indigo-500 text-white font-bold rounded-xl transition-all duration-300;
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+    @apply bg-indigo-500 text-white font-bold rounded-xl transition-all duration-300 border border-indigo-400/60;
+    box-shadow:
+      0 0 18px rgba(129, 140, 248, 0.6),
+      0 0 36px rgba(79, 70, 229, 0.45);
   }
 
   .neon-btn:hover {
     @apply bg-indigo-600 -translate-y-0.5;
-    box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
+    box-shadow:
+      0 0 26px rgba(129, 140, 248, 0.9),
+      0 0 52px rgba(79, 70, 229, 0.65);
   }
 
   .sidebar-link {
