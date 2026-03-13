@@ -31,4 +31,5 @@ class Question extends Model
     {
         return $this->hasMany(Favorite::class);
     }
+    
 }

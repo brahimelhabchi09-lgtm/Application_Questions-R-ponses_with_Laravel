@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    font-family: 'Outfit', sans-serif;
+  }
+
+  body {
+    @apply bg-[#020617] text-slate-200 antialiased;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-800 rounded-full;
+  }
+}
+
+@layer components {
+  .glass {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    @apply rounded-2xl;
+  }
+
+  .neon-btn {
+    @apply bg-indigo-500 text-white font-bold rounded-xl transition-all duration-300;
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+  }
+
+  .neon-btn:hover {
+    @apply bg-indigo-600 -translate-y-0.5;
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
+  }
+
+  .sidebar-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 font-medium transition-all duration-200;
+  }
+
+  .sidebar-link:hover {
+    @apply bg-white/5 text-white;
+  }
+
+  .sidebar-link.active {
+    @apply text-indigo-400;
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+  }
+
+  .card-enter {
+    animation: fadeUp 0.35s ease both;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

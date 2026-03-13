@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-outfit antialiased selection:bg-primary selection:text-white;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-glass-card backdrop-blur-xl border border-white/5 rounded-2xl;
+  }
+  .neon-button {
+    @apply relative overflow-hidden transition-all duration-300 transform active:scale-95;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-800 rounded-full hover:bg-slate-700 transition-colors;
+}
