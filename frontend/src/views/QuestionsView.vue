@@ -95,7 +95,7 @@ async function fetchPage(page = 1) {
     questions.value = data.data
     meta.value      = data.meta ?? data
   } catch (e) {
-    error.value = 'Impossible de charger les questions. Vérifiez que le serveur Laravel tourne sur le port 8000.'
+    error.value = 'Impossible de charger les questions. Vérifiez que le backend est bien accessible via /api (port 3535 en Docker).'
   } finally {
     loading.value = false
   }
