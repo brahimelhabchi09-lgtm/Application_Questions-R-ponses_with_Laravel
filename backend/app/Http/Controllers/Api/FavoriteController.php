@@ -44,4 +44,13 @@ class FavoriteController extends Controller
 
         return response()->json(['message' => 'Retiré des favoris']);
     }
+
+    public function destroyByQuestion(Request $request, $question_id)
+    {
+        Favorite::where('user_id', $request->user()->id)
+            ->where('question_id', $question_id)
+            ->delete();
+
+        return response()->json(['message' => 'Retiré des favoris']);
+    }
 }
