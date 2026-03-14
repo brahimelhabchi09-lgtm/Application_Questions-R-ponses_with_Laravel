@@ -6,6 +6,7 @@ import QuestionDetailView from '@/views/QuestionDetailView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import CreateQuestionView from '@/views/CreateQuestionView.vue'
+import FavoritesView from '@/views/FavoritesView.vue'
 
 const routes = [
   { path: '/', component: QuestionsView },
@@ -13,6 +14,7 @@ const routes = [
   { path: '/login', component: LoginView, meta: { guest: true } },
   { path: '/register', component: RegisterView, meta: { guest: true } },
   { path: '/questions/create', component: CreateQuestionView, meta: { auth: true } },
+  { path: '/favorites', component: FavoritesView, meta: { auth: true } },
 ]
 
 const router = createRouter({
