@@ -32,9 +32,17 @@ class QuestionController extends Controller
     ], 201);
   }
 
-  public function show($id)
+  public function show(Request $request, $id)
   {
-    return Question::with(['user', 'responses.user'])->findOrFail($id);
+    $question = Question::with(['user', 'responses.user'])->findOrFail($id);
+
+    if ($request->user()) {
+      $fav = $request->user()->favorites()->where('question_id', $id)->first();
+      $question->is_favorited = (bool) $fav;
+      $question->favorite_id = $fav?->id;
+    }
+
+    return $question;
   }
 
   public function update(Request $request, $id)
