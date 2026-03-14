@@ -1,45 +1,54 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center p-4">
+  <div class="min-h-[60vh] flex items-center justify-center py-8 sm:py-12 px-2">
     <div class="w-full max-w-md card-enter">
-      <!-- Logo -->
-      <div class="text-center mb-8">
-        <div class="w-14 h-14 rounded-2xl bg-indigo-500 flex items-center justify-center mx-auto mb-4" style="box-shadow:0 0 24px rgba(99,102,241,0.5)">
+      <div class="text-center mb-6 sm:mb-8">
+        <div class="w-14 h-14 rounded-2xl bg-indigo-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-indigo-500/30">
           <span class="material-symbols-outlined text-white text-[28px]">hub</span>
         </div>
-        <h1 class="text-3xl font-black text-white">Connexion</h1>
-        <p class="text-slate-400 mt-1">Bon retour parmi nous !</p>
+        <h1 class="text-2xl sm:text-3xl font-black text-white">Connexion</h1>
+        <p class="text-slate-400 mt-1 text-sm sm:text-base">Bon retour parmi nous !</p>
       </div>
 
-      <form @submit.prevent="handleLogin" class="glass p-8 space-y-5">
-        <!-- Error -->
+      <form @submit.prevent="handleLogin" class="glass p-6 sm:p-8 space-y-5 rounded-2xl">
         <div v-if="error" class="bg-red-500/10 border border-red-500/20 rounded-xl p-3 text-red-400 text-sm flex items-center gap-2">
-          <span class="material-symbols-outlined text-[18px]">error</span> {{ error }}
+          <span class="material-symbols-outlined text-[18px] shrink-0">error</span>
+          <span>{{ error }}</span>
         </div>
 
-        <!-- Email -->
         <div>
           <label class="block text-sm font-semibold text-slate-300 mb-2">Email</label>
           <div class="relative">
             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-[20px]">mail</span>
-            <input v-model="form.email" type="email" placeholder="vous@exemple.com" required
-              class="w-full bg-white/5 border border-white/5 rounded-xl pl-10 pr-4 py-3 text-slate-200 placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 text-sm transition-all" />
+            <input
+              v-model="form.email"
+              type="email"
+              placeholder="vous@exemple.com"
+              required
+              class="input-field input-field-icon min-h-[48px]"
+            />
           </div>
         </div>
 
-        <!-- Password -->
         <div>
           <label class="block text-sm font-semibold text-slate-300 mb-2">Mot de passe</label>
           <div class="relative">
             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-[20px]">lock</span>
-            <input v-model="form.password" type="password" placeholder="••••••••" required
-              class="w-full bg-white/5 border border-white/5 rounded-xl pl-10 pr-4 py-3 text-slate-200 placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 text-sm transition-all" />
+            <input
+              v-model="form.password"
+              type="password"
+              placeholder="••••••••"
+              required
+              class="input-field input-field-icon min-h-[48px]"
+            />
           </div>
         </div>
 
-        <!-- Submit -->
-        <button type="submit" :disabled="loading"
-          class="neon-btn w-full py-3 text-sm flex items-center justify-center gap-2 disabled:opacity-50">
-          <span v-if="loading" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+        <button
+          type="submit"
+          :disabled="loading"
+          class="neon-btn w-full py-3.5 text-sm sm:text-base flex items-center justify-center gap-2 min-h-[48px] disabled:opacity-50"
+        >
+          <span v-if="loading" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
           <span v-else class="material-symbols-outlined text-[18px]">login</span>
           {{ loading ? 'Connexion...' : 'Se connecter' }}
         </button>
