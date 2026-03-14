@@ -12,7 +12,7 @@ class FavoriteController extends Controller
     {
         $favorites = $request->user()
             ->favorites()
-            ->with(['question.user', 'question' => fn($q) => $q->withCount('responses')])
+            ->with(['question' => fn($q) => $q->with('user')->withCount('responses')])
             ->latest()
             ->paginate(15);
 
