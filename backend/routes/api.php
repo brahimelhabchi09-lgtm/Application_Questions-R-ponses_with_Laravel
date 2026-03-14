@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\ReponseController;
 use Illuminate\Http\Request;
@@ -24,4 +25,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/reponses', [ReponseController::class, 'store']);
     Route::delete('/reponses/{id}', [ReponseController::class, 'destroy']);
+
+    Route::get('/favorites', [FavoriteController::class, 'index']);
+    Route::post('/favorites', [FavoriteController::class, 'store']);
+    Route::delete('/favorites/{id}', [FavoriteController::class, 'destroy']);
 });
