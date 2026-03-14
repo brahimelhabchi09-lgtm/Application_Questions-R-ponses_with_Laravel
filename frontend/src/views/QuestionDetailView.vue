@@ -15,14 +15,27 @@
 
     <template v-else-if="question">
       <article class="glass p-6 sm:p-8 card-enter rounded-2xl">
-        <div class="flex items-center gap-3 mb-4 sm:mb-6">
-          <div class="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold shrink-0">
-            {{ question.user?.name?.charAt(0).toUpperCase() }}
+        <div class="flex items-center justify-between gap-3 mb-4 sm:mb-6">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold shrink-0">
+              {{ question.user?.name?.charAt(0).toUpperCase() }}
+            </div>
+            <div class="min-w-0">
+              <p class="font-bold text-white truncate">{{ question.user?.name }}</p>
+              <p class="text-xs text-slate-500">{{ formatDate(question.created_at) }}</p>
+            </div>
           </div>
-          <div class="min-w-0">
-            <p class="font-bold text-white truncate">{{ question.user?.name }}</p>
-            <p class="text-xs text-slate-500">{{ formatDate(question.created_at) }}</p>
-          </div>
+          <button
+            v-if="auth.isLoggedIn"
+            type="button"
+            @click="toggleFavorite"
+            :disabled="favoriteLoading"
+            class="p-2.5 rounded-xl transition-colors shrink-0 disabled:opacity-50"
+            :class="isFavorited ? 'text-amber-400 hover:bg-amber-500/20' : 'text-slate-500 hover:bg-white/5 hover:text-amber-400'"
+            :title="isFavorited ? 'Retirer des favoris' : 'Ajouter aux favoris'"
+          >
+            <span class="material-symbols-outlined text-[24px]">{{ isFavorited ? 'favorite' : 'favorite_border' }}</span>
+          </button>
         </div>
         <h1 class="text-xl sm:text-2xl font-black text-white mb-3 sm:mb-4 leading-snug">{{ question.title }}</h1>
         <p class="text-slate-300 leading-relaxed whitespace-pre-line text-sm sm:text-base">{{ question.content }}</p>
@@ -93,18 +106,40 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
 
-const route       = useRoute()
-const auth        = useAuthStore()
-const question    = ref(null)
-const loading     = ref(true)
-const reponse     = ref('')
-const submitting  = ref(false)
-const submitError = ref(null)
+const route         = useRoute()
+const auth          = useAuthStore()
+const question      = ref(null)
+const loading       = ref(true)
+const reponse       = ref('')
+const submitting    = ref(false)
+const submitError   = ref(null)
+const favoriteLoading = ref(false)
+
+const isFavorited = computed(() => !!question.value?.is_favorited)
+
+async function toggleFavorite() {
+  if (!auth.isLoggedIn || favoriteLoading.value) return
+  favoriteLoading.value = true
+  try {
+    if (question.value.is_favorited) {
+      await axios.delete(`/api/favorites/by-question/${question.value.id}`)
+      question.value.is_favorited = false
+      question.value.favorite_id = null
+    } else {
+      await axios.post('/api/favorites', { question_id: question.value.id })
+      question.value.is_favorited = true
+    }
+  } catch {
+    submitError.value = 'Erreur lors de la mise à jour des favoris.'
+  } finally {
+    favoriteLoading.value = false
+  }
+}
 
 async function fetchQuestion() {
   loading.value = true

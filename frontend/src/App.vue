@@ -15,6 +15,10 @@
             <span class="material-symbols-outlined text-[20px]">forum</span>
             <span>Questions</span>
           </RouterLink>
+          <RouterLink v-if="auth.isLoggedIn" to="/favorites" class="sidebar-link" :class="{ active: $route.path === '/favorites' }">
+            <span class="material-symbols-outlined text-[20px]">favorite</span>
+            <span>Favoris</span>
+          </RouterLink>
           <RouterLink to="/questions/create" class="sidebar-link" :class="{ active: $route.path === '/questions/create' }">
             <span class="material-symbols-outlined text-[20px]">add_circle</span>
             <span>Nouvelle Question</span>
@@ -107,6 +111,11 @@
         :class="$route.path === '/questions/create' ? 'text-indigo-400 bg-indigo-500/15' : 'text-slate-500 hover:text-white'">
         <span class="material-symbols-outlined text-[24px]">add_circle</span>
         <span class="text-[10px] font-medium">Poser</span>
+      </RouterLink>
+      <RouterLink v-if="auth.isLoggedIn" to="/favorites" class="flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-colors min-w-[64px]"
+        :class="$route.path === '/favorites' ? 'text-indigo-400 bg-indigo-500/15' : 'text-slate-500 hover:text-white'">
+        <span class="material-symbols-outlined text-[24px]">favorite</span>
+        <span class="text-[10px] font-medium">Favoris</span>
       </RouterLink>
       <template v-if="auth.isLoggedIn">
         <button type="button" @click="handleLogout" class="flex flex-col items-center gap-1 px-4 py-2 rounded-xl text-slate-500 hover:text-red-400 transition-colors min-w-[64px]">
