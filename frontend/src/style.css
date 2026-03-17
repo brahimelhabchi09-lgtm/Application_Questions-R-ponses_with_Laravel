@@ -14,9 +14,10 @@
   body {
     @apply text-slate-200 antialiased;
     background:
-      radial-gradient(circle at top left, rgba(56, 189, 248, 0.1), transparent 50%),
-      radial-gradient(circle at bottom right, rgba(129, 140, 248, 0.14), transparent 50%),
-      #0f172a;
+      radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% -20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(6, 182, 212, 0.05) 0%, transparent 50%),
+      #0a0e27;
     min-height: 100dvh;
     min-height: 100vh;
     padding-bottom: env(safe-area-inset-bottom);
@@ -24,23 +25,29 @@
 
   /* Touch-friendly tap targets on mobile */
   @media (max-width: 768px) {
-    button:not([type="submit"]):not(.neon-btn),
+    button:not([type="submit"]):not(.neuro-btn),
     .sidebar-link {
       min-height: 48px;
     }
   }
 
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: transparent;
+    background: rgba(59, 130, 246, 0.05);
+    border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-slate-700 rounded-full;
+    @apply rounded-full;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.6), rgba(59, 130, 246, 0.6));
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.8), rgba(59, 130, 246, 0.8));
   }
 
   .line-clamp-2 {
@@ -52,57 +59,126 @@
 }
 
 @layer components {
+  /* Neumorphism Card Components */
+  .neuro-card {
+    @apply bg-gradient-to-br from-dark-card to-dark-bg rounded-2xl;
+    box-shadow: var(--tw-shadow);
+    border: 1px solid rgba(124, 58, 237, 0.1);
+  }
+
+  .neuro-card-lg {
+    @apply neuro-card;
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.4), -4px -4px 12px rgba(124, 58, 237, 0.08);
+  }
+
+  .neuro-card:hover {
+    @apply border-primary/30 transition-all duration-300;
+    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.5), -6px -6px 16px rgba(124, 58, 237, 0.12);
+  }
+
+  /* Glass fallback for compatibility */
   .glass {
-    background: rgba(30, 41, 59, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(148, 163, 184, 0.12);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    @apply neuro-card-lg;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
   .glass-hover:hover {
-    border-color: rgba(129, 140, 248, 0.25);
-    background: rgba(51, 65, 85, 0.6);
+    @apply neuro-card:hover;
   }
 
+  /* Neumorphic Buttons */
+  .neuro-btn {
+    @apply bg-gradient-to-br from-primary to-secondary text-white font-semibold rounded-xl transition-all duration-300 border-0 relative overflow-hidden;
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.3), -4px -4px 12px rgba(124, 58, 237, 0.15);
+  }
+
+  .neuro-btn:hover {
+    @apply shadow-neuro-hover;
+    transform: translateY(-2px);
+  }
+
+  .neuro-btn:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  .neuro-btn-sm {
+    @apply neuro-btn py-2 px-4 text-sm;
+  }
+
+  .neuro-btn-lg {
+    @apply neuro-btn py-4 px-6 text-base;
+  }
+
+  /* Neon button for legacy support */
   .neon-btn {
-    @apply bg-indigo-500 text-white font-semibold rounded-xl transition-all duration-200 border-0;
-    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.45);
+    @apply neuro-btn;
   }
 
   .neon-btn:hover {
-    @apply bg-indigo-600;
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.55);
+    @apply neuro-btn:hover;
   }
 
   .neon-btn:active {
-    transform: scale(0.98);
+    @apply neuro-btn:active;
   }
 
+  /* Sidebar Links */
   .sidebar-link {
-    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 font-medium transition-all duration-200 min-h-[44px];
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 font-medium transition-all duration-300 min-h-[44px] relative;
+    background: rgba(15, 23, 41, 0.5);
   }
 
   .sidebar-link:hover {
-    @apply bg-white/5 text-white;
+    @apply text-white;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(59, 130, 246, 0.05));
+    box-shadow: inset 2px 2px 8px rgba(0, 0, 0, 0.3);
   }
 
   .sidebar-link.active {
-    @apply text-indigo-400;
-    background: rgba(99, 102, 241, 0.15);
+    @apply text-primary;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(59, 130, 246, 0.1));
+    box-shadow: var(--tw-shadow);
   }
 
+  /* Animations */
   .card-enter {
-    animation: fadeUp 0.35s ease both;
+    animation: slideInUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 30px rgba(124, 58, 237, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(124, 58, 237, 0.4);
+    }
+  }
+
+  /* Form Inputs */
   .input-field {
-    @apply w-full bg-slate-800/50 border border-slate-600/50 rounded-xl px-4 py-3 text-slate-200 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 text-base transition-all;
+    @apply w-full rounded-xl px-4 py-3 text-slate-200 placeholder:text-slate-500 focus:outline-none text-base transition-all;
+    background: rgba(15, 23, 41, 0.6);
+    border: 1px solid rgba(124, 58, 237, 0.15);
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .input-field:focus {
+    @apply border-primary/50;
+    background: rgba(15, 23, 41, 0.8);
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2), 0 0 20px rgba(124, 58, 237, 0.2);
   }
 
   .input-field-icon {
@@ -112,6 +188,26 @@
   @media (min-width: 768px) {
     .input-field {
       @apply py-3.5;
+    }
+  }
+
+  /* Utility Classes */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-light via-primary to-secondary bg-clip-text text-transparent;
+  }
+
+  .float-shadow {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+      box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.4), -4px -4px 12px rgba(124, 58, 237, 0.08);
+    }
+    50% {
+      transform: translateY(-10px);
+      box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.5), -6px -6px 16px rgba(124, 58, 237, 0.12);
     }
   }
 }
