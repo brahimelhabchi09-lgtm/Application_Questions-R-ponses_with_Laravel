@@ -4,7 +4,9 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="md:col-span-2">
         <h1 class="text-5xl font-black text-white mb-3">
-          Welcome<span v-if="auth.isLoggedIn" class="text-gradient"> {{ auth.user?.name }}</span>!
+          Welcome
+          <span v-if="auth.isLoggedIn" class="text-gradient"> {{ auth.user?.name }}</span>
+          <span class="text-gradient">!</span>
         </h1>
         <p class="text-slate-400 text-xl">Discover and answer community questions</p>
       </div>
@@ -110,21 +112,21 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
 
-const auth      = useAuthStore()
+const auth = useAuthStore()
 const questions = ref([])
-const meta      = ref(null)
-const loading   = ref(true)
-const error     = ref(null)
+const meta = ref(null)
+const loading = ref(true)
+const error = ref(null)
 
 async function fetchPage(page = 1) {
   loading.value = true
-  error.value   = null
+  error.value = null
   try {
     const { data } = await axios.get(`/api/questions?page=${page}`)
     questions.value = data.data
-    meta.value      = data.meta ?? data
+    meta.value = data.meta ?? data
   } catch (e) {
-    error.value = 'Impossible de charger les questions. Vérifiez que le backend est bien accessible via /api (port 3535 en Docker).'
+    error.value = 'Cannot load questions. Make sure the backend is accessible at /api (port 3535 in Docker).'
   } finally {
     loading.value = false
   }
@@ -132,7 +134,7 @@ async function fetchPage(page = 1) {
 
 function formatDate(d) {
   if (!d) return ''
-  return new Date(d).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
+  return new Date(d).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
 onMounted(() => fetchPage())
